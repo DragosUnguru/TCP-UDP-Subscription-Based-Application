@@ -1,47 +1,49 @@
 
 #  RUNNING THE PROGRAM
 
-	!!! MIGTH NEED CMAKE TO COMPILE !!!
-    	sudo apt-get install cmake
+!!! MIGTH NEED CMAKE TO COMPILE !!!
+sudo apt-get install cmake
     
-    The makefile automatically generates a random ID for
+The makefile automatically generates a random ID for
 every other TCP subscriber.
     The IP is automatically set to LOCAL_HOST (127.0.0.1).
 
-    - Compile with:        make
-    - Run server with:     make run_server
-    - Run TCP client with: make run_subscriber
-    - Run UDP client with: make run_udp
-            (set to manual mode)
-    - Clean:               make clean
+- Compile with:        make
+- Run server with:     make run_server
+- Run TCP client with: make run_subscriber
+- Run UDP client with: make run_udp
+    (set to manual mode)
+- Clean:               make clean
 
 
 #  BRIEF INTRODUCTION
 
-    A subscriber-based communication application between
+A subscriber-based communication application between
 multiple clients.
-    A reliable implementation of the transport level
+
+A reliable implementation of the transport level
 using a server which takes information from a UDP client
 and sends it to a TCP subscriber.
 
 #  CLIENT:
 
-    The TCP client is implemented as simple as possible.
+The TCP client is implemented as simple as possible.
 It's only job is to multiplex between the stdin and the 
 socket through which it communiates with the server, 
 check for user error and decode the received message from
 the server.
-    Accepted commands:
+
+Accepted commands:
 ->  exit
-->  subscribe <topic_name> <SF_FLAG>    <-implemented a store & forward feature
+->  subscribe <topic_name> <SF_FLAG = {0, 1}>  <-implemented a store & forward feature
 ->  unsubscribe <topic_name>
 
 ->  SERVER:
 
-    The server multiplexes between:
+The server multiplexes between:
 - stdin input
-- UDP client message
-- TCP client connection / request
+- UDP clients messages
+- TCP clients connections / requests
 
     Its job is to parse every message received from
 the UDP client, categorize them by topic / tcp clients
@@ -53,5 +55,5 @@ In case a subscriber sets the SF flag to 1, it demands all the
 messages sent by the time of his request.
 
 
-    This was implemented in a hurry and C++ was abused in some places.
+This was implemented in a hurry and C++ was abused in some places.
 Changes may come in the future.
